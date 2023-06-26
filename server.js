@@ -10,7 +10,7 @@ function Movie (title,p_p,overview){
   this.title=title;
   this.p_p=p_p;
   this.overview=overview;
-
+    
 }
 let y = new Movie (uniData.title,uniData.poster_path,uniData.overview);
 app.get("/",handleHome);
