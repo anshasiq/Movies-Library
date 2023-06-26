@@ -3,6 +3,7 @@
 const express = require("express");
 const uniData = require("./movie data/data.json"); // improting data from json file and save it in a variable
 const app = express();
+const pg = require("pg");
 const cors = require("cors");
 app.use(cors());
 function Movie (title,p_p,overview){
@@ -34,10 +35,10 @@ function handlFav(req, res) {
 
 
 
-app.listen(3000, startingLog);
+app.listen(3001, startingLog);
 
 function startingLog(req, res) {
-  console.log("Running at 3000");
+  console.log("Running at 3001");
 }
 
 
