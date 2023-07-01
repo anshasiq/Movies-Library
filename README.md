@@ -2,8 +2,7 @@
 
 ### **Author Name**: Mr.Ahmad Anshasi
 
-## WRRC
-![alt text](null.png)
+
 
 ## Overview
 movie app that can check the latest movies based on categories.
