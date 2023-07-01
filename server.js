@@ -13,7 +13,7 @@ app.use(cors());
 //   this.p_p=p_p;
 //   this.overview=overview;}
 // let y = new Movie (uniData.title,uniData.poster_path,uniData.overview);
-app.post("/addMovie",handleHome);
+app.post("/addMovie",addd);
 // app.get("/favorite",handlFav);
 app.get("*", handleNotFoud);
 function handleNotFoud(req, res) {
@@ -28,7 +28,7 @@ function handleNotFoud(req, res) {
       res.status(200).send(moviesdata.rows);
     });
   });
-function handleHome(req, res) {
+function addd(req, res) {
 console.log("yout home");
 let mo=req.body.mov;
 let co=req.body.comm;
