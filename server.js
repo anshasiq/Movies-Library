@@ -7,6 +7,11 @@ const cors = require("cors");
 app.use(cors());
 const axios = require("axios");
 require("dotenv").config(); 
+const pg = require("pg");
+// const cors = require("cors");
+const DB = new pg.Client('postgres://localhost:5432/movies');
+app.use(express.json()); 
+
 // function Movie (titlee,p_p,overview){
 //   this.titlee=titlee;
 //   this.p_p=p_p;
@@ -25,6 +30,29 @@ function Movie (id,title,release_date,poster_path,overview){
 // let y = new Movie (uniData.title,uniData.poster_path,uniData.overview);
 // process.env.link
 ///trending
+app.post("/addMovie",addd);
+function addd(req, res) {
+  console.log("yout home");
+  let ti=req.body.title;
+  let ty=req.body.typee;
+  let ye=req.body.year;
+  let yo = 'INSERT INTO movies (title, typee, year) VALUES ($1, $2, $3)';
+      DB.query(yo, [ti,ty,ye]).then(() => {
+        res.status(201);
+      });
+   
+  res.send(req.body);
+  }
+
+  app.get("/getMovies", (req, res) => {
+    let sql = `SELECT * FROM movies`;
+    DB.query(sql).then((moviesdata) => {
+      res.status(200).send(moviesdata.rows);
+    });
+  });
+
+
+
 app.get("/trending", async (req, res) => {
   console.log("123");
 
@@ -64,12 +92,13 @@ app.get("/trending", async (req, res) => {
           });
       }
     
-    
-    app.listen(3000, startingLog);
-    
-    function startingLog(req, res) {
-      console.log("Running at 3000");
-    }
-    
+
+    DB.connect().then(() => {
+      app.listen(3001, startingLog);
+    });
+function startingLog(req, res) {
+  console.log("Running at 3001");
+}
+
     
     

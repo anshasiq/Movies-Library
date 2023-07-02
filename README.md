@@ -2,8 +2,7 @@
 
 ### **Author Name**: Mr.Ahmad Anshasi
 
-## WRRC
-![alt text](null.png)
+
 
 ## Overview
 movie app that can check the latest movies based on categories.
@@ -15,6 +14,8 @@ movie app that can check the latest movies based on categories.
 * /search : you have to specify the name of movies
 * / genres
 * /certification
+* /addMovie
+* /getMovies
 ## Project Features
 <!-- What are the features included in you app -->
 * /trending
@@ -22,3 +23,5 @@ movie app that can check the latest movies based on categories.
 * / genres
 * /certification
 * *Not found
+* /addMovie
+* /getMovies
