@@ -9,7 +9,7 @@ const axios = require("axios");
 require("dotenv").config(); 
 const pg = require("pg");
 // const cors = require("cors");
-const DB = new pg.Client('postgres://localhost:5432/movies');
+const DB = new pg.Client(process.env.database_Url);
 app.use(express.json()); 
 
 // function Movie (titlee,p_p,overview){
@@ -36,8 +36,8 @@ function addd(req, res) {
   let ti=req.body.title;
   let ty=req.body.typee;
   let ye=req.body.year;
-  let yo = 'INSERT INTO movies (title, typee, year) VALUES ($1, $2, $3)';
-      DB.query(yo, [ti,ty,ye]).then(() => {
+  let yo = 'INSERT INTO movies (title, typee, comment ,year) VALUES ($1, $2, $3, $4)';
+      DB.query(yo, [ti,ty,req.body.comm,ye]).then(() => {
         res.status(201);
       });
    
@@ -84,6 +84,54 @@ app.get("/trending", async (req, res) => {
       res.send(cer.data);
     });
     
+
+    app.delete("/DELETE/:id", async (req, res) => {
+      try {
+        let { id } = req.params;
+        let sql = `DELETE FROM movies WHERE id =${id}`;
+        let data = await DB.query(sql);
+        console.log(data);
+        res.status(204).end();
+      } catch (e) {
+        next("deleteCar " + e);
+      }
+    });
+
+    app.get("/getMovie/:id", (req, res) => {
+      // console.log("asd");
+      let o = req.params.id;
+      // console.log(o);
+      let sql =  `SELECT * FROM movies WHERE id = ${o}`;
+      DB.query(sql).then((moviesdata) => {
+        res.status(200).send(moviesdata.rows[0]);
+      });
+    });
+
+    app.put("/UPDATE/:id", (req, res) => {
+      console.log("asd");
+      let z = req.params.id;
+      // console.log(o);
+      let sql =  `UPDATE movies SET comment=$1 WHERE id = ${z}`;
+      DB.query(sql,[req.body.comm ]).then((moviesdata) => {
+        res.status(200).end();
+      });
+    });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     app.get("*", handleNotFoud);
     function handleNotFoud(req, res) {
         res.send({
@@ -94,10 +142,10 @@ app.get("/trending", async (req, res) => {
     
 
     DB.connect().then(() => {
-      app.listen(3001, startingLog);
+      app.listen(process.env.PORT, startingLog);
     });
 function startingLog(req, res) {
-  console.log("Running at 3001");
+  console.log(`Running at ${process.env.PORT}`);
 }
 
     
