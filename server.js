@@ -9,9 +9,13 @@ const axios = require("axios");
 require("dotenv").config(); 
 const pg = require("pg");
 // const cors = require("cors");
-const DB = new pg.Client(process.env.database_Url);
+// const DB = new pg.Client(process.env.database_Url);
+const DB = require("./DB");
+const h = require("./g.routes");
+app.use(h);
 app.use(express.json()); 
-
+// const R = require("./g.routes");
+// app.use(R);
 // function Movie (titlee,p_p,overview){
 //   this.titlee=titlee;
 //   this.p_p=p_p;
@@ -30,19 +34,19 @@ function Movie (id,title,release_date,poster_path,overview){
 // let y = new Movie (uniData.title,uniData.poster_path,uniData.overview);
 // process.env.link
 ///trending
-app.post("/addMovie",addd);
-function addd(req, res) {
-  console.log("yout home");
-  let ti=req.body.title;
-  let ty=req.body.typee;
-  let ye=req.body.year;
-  let yo = 'INSERT INTO movies (title, typee, comment ,year) VALUES ($1, $2, $3, $4)';
-      DB.query(yo, [ti,ty,req.body.comm,ye]).then(() => {
-        res.status(201);
-      });
+// app.post("/addMovie",addd);
+// function addd(req, res) {
+//   console.log("yout home");
+//   let ti=req.body.title;
+//   let ty=req.body.typee;
+//   let ye=req.body.year;
+//   let yo = 'INSERT INTO movies (title, typee, comment ,year) VALUES ($1, $2, $3, $4)';
+//       DB.query(yo, [ti,ty,req.body.comm,ye]).then(() => {
+//         res.status(201);
+//       });
    
-  res.send(req.body);
-  }
+//   res.send(req.body);
+//   }
 
   app.get("/getMovies", (req, res) => {
     let sql = `SELECT * FROM movies`;
@@ -85,46 +89,37 @@ app.get("/trending", async (req, res) => {
     });
     
 
-    app.delete("/DELETE/:id", async (req, res) => {
-      try {
-        let { id } = req.params;
-        let sql = `DELETE FROM movies WHERE id =${id}`;
-        let data = await DB.query(sql);
-        console.log(data);
-        res.status(204).end();
-      } catch (e) {
-        next("deleteCar " + e);
-      }
-    });
+    // app.delete("/DELETE/:id", async (req, res) => {
+    //   try {
+    //     let { id } = req.params;
+    //     let sql = `DELETE FROM movies WHERE id =${id}`;
+    //     let data = await DB.query(sql);
+    //     console.log(data);
+    //     res.status(204).end();
+    //   } catch (e) {
+    //     next("deleteCar " + e);
+    //   }
+    // });
 
-    app.get("/getMovie/:id", (req, res) => {
-      // console.log("asd");
-      let o = req.params.id;
-      // console.log(o);
-      let sql =  `SELECT * FROM movies WHERE id = ${o}`;
-      DB.query(sql).then((moviesdata) => {
-        res.status(200).send(moviesdata.rows[0]);
-      });
-    });
+    // app.get("/getMovie/:id", (req, res) => {
+    //   // console.log("asd");
+    //   let o = req.params.id;
+    //   // console.log(o);
+    //   let sql =  `SELECT * FROM movies WHERE id = ${o}`;
+    //   DB.query(sql).then((moviesdata) => {
+    //     res.status(200).send(moviesdata.rows[0]);
+    //   });
+    // });
 
-    app.put("/UPDATE/:id", (req, res) => {
-      console.log("asd");
-      let z = req.params.id;
-      // console.log(o);
-      let sql =  `UPDATE movies SET comment=$1 WHERE id = ${z}`;
-      DB.query(sql,[req.body.comm ]).then((moviesdata) => {
-        res.status(200).end();
-      });
-    });
-
-
-
-
-
-
-
-
-
+    // app.put("/UPDATE/:id", (req, res) => {
+    //   console.log("asd");
+    //   let z = req.params.id;
+    //   // console.log(o);
+    //   let sql =  `UPDATE movies SET comment=$1 WHERE id = ${z}`;
+    //   DB.query(sql,[req.body.comm ]).then((moviesdata) => {
+    //     res.status(200).end();
+    //   });
+    // });
 
 
 
